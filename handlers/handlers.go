@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/go-redis/redis"
 
 	// An HTTP router
 	// For getting the env variables
@@ -106,20 +107,42 @@ func GetList(w http.ResponseWriter, r *http.Request) {
 	// Set header to json content, otherwise data appear as plain text
 	w.Header().Set("Content-Type", "application/json")
 
-	// Connect to database and get user_id
-	db := OpenConnection()
 	var getemail Email
+	var userId string
 	err := json.NewDecoder(r.Body).Decode(&getemail)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		panic(err)
 	}
 
-	var userId string
-	sql := `Select user_id from users where email= $1 `
-	// getUser := `SELECT user_id FROM users WHERE email = $1;`
-	err = db.QueryRow(sql, getemail.Email).Scan(&userId)
+	client := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
+	})
+	db := OpenConnection()
 
+	val, err := client.Get(getemail.Email).Result()
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println("TESTING CACHE SERVICE")
+		// Connect to database and get user_id
+		sql := `Select user_id from users where email= $1 `
+		// getUser := `SELECT user_id FROM users WHERE email = $1;`
+		err = db.QueryRow(sql, getemail.Email).Scan(&userId)
+		// Setting cache data
+		defer db.Close()
+
+		err = client.Set(getemail.Email, userId, 0).Err()
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println("TEsting cache setting service")
+		}
+	} else {
+		userId = val
+	}
+
+	///#####
 	// Return all tasks (rows) as id, task, status where the user_uuid of the task is the same as user_id we have obtained in the previous step
 	rows, err := db.Query("SELECT id, task, status FROM tasks JOIN users ON tasks.user_uuid = users.user_id WHERE user_id = $1;", userId)
 	if err != nil {
@@ -206,6 +229,10 @@ func AddTask(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(updatedTask)
 }
 
+// {
+//     "username":"abctest",
+//     "password":"hello"
+// }
 type User struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
