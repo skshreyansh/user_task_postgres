@@ -50,7 +50,8 @@ func main() {
 	r.HandleFunc("/add", handlers.AddTask).Methods("POST")
 	r.HandleFunc("/addUser", handlers.AddUser).Methods("POST")
 	r.HandleFunc("/login", handlers.Login).Methods("POST")
-
+	r.HandleFunc("/userlogin", handlers.UserLogged).Methods("POST")
+	r.HandleFunc("/logout", handlers.Logout).Methods("POST")
 	port, ok := os.LookupEnv("PORT")
 	if !ok {
 		port = "8000"
