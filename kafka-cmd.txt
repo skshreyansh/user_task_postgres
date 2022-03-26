@@ -1,0 +1,23 @@
+ZooKeper(although its deprecated) in latest version:
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+
+Kafka Server:
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+
+Producer:
+.\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic TestTopic
+
+Consumer:
+.\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic TestTopic --from-beginning
+
+List Topics:
+.\bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --list
+
+Create Topic :
+.\bin\windows\kafka-topics.bat --create --topic test-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 2
+
+Delete Topic:
+
+.\bin\windows\kafka-run-class.bat kafka.admin.TopicCommand --delete --topic test-topic --bootstrap-server localhost:9092
