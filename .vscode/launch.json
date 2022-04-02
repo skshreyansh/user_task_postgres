@@ -10,7 +10,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "D:/GolangDBProject/main.go"
+            "program": "/Users/mmt9144/proj/user_task_postgres/main.go"
         }
     ]
 }
