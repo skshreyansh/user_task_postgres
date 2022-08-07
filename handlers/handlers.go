@@ -18,11 +18,11 @@ import (
 const (
 	// host = "localhost"
 	// port = 5432 // default port for PostgreSQL
-	host     = "localhost"
+	host     = "ec2-44-193-178-122.compute-1.amazonaws.com"
 	port     = 5432
-	user     = "docker"
-	password = "docker"
-	dbname   = "exampledb"
+	user     = "uhieudfnmtzmgx"
+	password = "ba2a59f35c97b854b67e590af27714461b2dd3be9fa620940889667d060771aa"
+	dbname   = "dc8l72r4a7e68n"
 )
 
 // The struct for a task, excluding the user_uuid which is added separately.
