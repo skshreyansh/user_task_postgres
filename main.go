@@ -46,6 +46,7 @@ func main() {
 	// CheckErr(e)
 
 	r := mux.NewRouter()
+	r.HandleFunc("/", handlers.HelloWorld).Methods("GET")
 	r.HandleFunc("/list", handlers.GetList).Methods("GET")
 	r.HandleFunc("/add", handlers.AddTask).Methods("POST")
 	r.HandleFunc("/addUser", handlers.AddUser).Methods("POST")

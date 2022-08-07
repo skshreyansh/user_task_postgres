@@ -94,3 +94,21 @@ func GetList(w http.ResponseWriter, r *http.Request) {
 	// Encode: encode WHAT
 	// _ = json.NewEncoder(w).Encode(items)
 }
+
+type Profile struct {
+	Name    string
+	Hobbies []string
+}
+
+func HelloWorld(w http.ResponseWriter, r *http.Request) {
+	profile := Profile{"Alex", []string{"snowboarding", "programming"}}
+
+	js, err := json.Marshal(profile)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+}
