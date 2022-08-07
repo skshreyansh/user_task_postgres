@@ -12,11 +12,11 @@ import (
 )
 
 const (
-	host     = "localhost"
+	host     = "ec2-44-193-178-122.compute-1.amazonaws.com"
 	port     = 5432
-	user     = "postgres"
-	password = "admin"
-	dbname   = "postgres"
+	user     = "uhieudfnmtzmgx"
+	password = "ba2a59f35c97b854b67e590af27714461b2dd3be9fa620940889667d060771aa"
+	dbname   = "dc8l72r4a7e68n"
 )
 
 type Jwks struct {
