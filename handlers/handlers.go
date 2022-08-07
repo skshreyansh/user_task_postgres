@@ -4,6 +4,7 @@ import (
 	// Includes all packages to be used in this file
 	"database/sql"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/dgrijalva/jwt-go"
@@ -36,10 +37,17 @@ type Item struct {
 // Connect to PostgreSQL database and also retrieve user_id from users table
 func OpenConnection() *sql.DB {
 
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	//psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
 	// 2. validates the arguments provided, doesn't create connection to database
-	db, err := sql.Open("postgres", psqlInfo)
+	//db, err := sql.Open("postgres", psqlInfo)
+
+	//db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	db, err := sql.Open("postgres", "postgres://uhieudfnmtzmgx:ba2a59f35c97b854b67e590af27714461b2dd3be9fa620940889667d060771aa@ec2-44-193-178-122.compute-1.amazonaws.com:5432/dc8l72r4a7e68n")
+	if err != nil {
+		log.Fatalf("Error opening database: %q", err)
+	}
+
 	if err != nil {
 		panic(err)
 	}
