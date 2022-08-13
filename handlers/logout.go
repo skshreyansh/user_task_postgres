@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -59,4 +60,5 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 			Value:   tokenString,
 			Expires: expirationTime,
 		})
+	fmt.Fprintf(w, "User Logged Out Successfully")
 }

@@ -47,12 +47,12 @@ func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", handlers.HelloWorld).Methods("GET")
-	r.HandleFunc("/list", handlers.GetList).Methods("GET")
-	r.HandleFunc("/add", handlers.AddTask).Methods("POST")
-	r.HandleFunc("/addUser", handlers.AddUser).Methods("POST")
-	r.HandleFunc("/login", handlers.Login).Methods("POST")
-	r.HandleFunc("/userlogin", handlers.UserLogged).Methods("POST")
-	r.HandleFunc("/logout", handlers.Logout).Methods("POST")
+	r.HandleFunc("/list", handlers.GetList)
+	r.HandleFunc("/add", handlers.AddTask)
+	r.HandleFunc("/addUser", handlers.AddUser)
+	r.HandleFunc("/login", handlers.Login)
+	// r.HandleFunc("/userlogin", handlers.UserLogged).Methods("POST")
+	r.HandleFunc("/logout", handlers.Logout)
 	port, ok := os.LookupEnv("PORT")
 	if !ok {
 		port = "8000"
@@ -68,4 +68,4 @@ func CheckErr(err error) {
 		fmt.Println("SDFSDF")
 		panic(err)
 	}
-}
+} 
